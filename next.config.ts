@@ -1,9 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    domains: ['images.pexels.com'],
+    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*",
+      },
+    ],
+  },
+  experimental: {
+    ppr: "incremental",
+  },
+  devIndicators: {
+    position: "bottom-right",
   },
 };
 
