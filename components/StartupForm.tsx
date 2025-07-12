@@ -10,7 +10,8 @@ import MDEditor from "@uiw/react-md-editor";
 import { formSchema } from '@/lib/validation';
 import z from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/router';
+import { createPitch } from '@/lib/action';
+import { useRouter } from "next/navigation";
 // import { toast } from "sonner"
 
 
@@ -35,18 +36,19 @@ const StartupForm = () => {
 
             console.log("Form Values:", formValues);
 
-            // if(result.status === "SUCCESS") {
-            //     toast({
-            //         title: "Success",
-            //         description: "Your startup idea has been submitted successfully!",
-            //         variant: "success",
-            //     });
-            // }
+            const result = await createPitch(prevState, formData, pitch);
 
-            // router.push(`/startup/${result.id}`)
+            if(result.status === "SUCCESS") {
+                toast({
+                    title: "Success",
+                    description: "Your startup idea has been submitted successfully!",
+                    variant: "success",
+                });
+            }
 
-            // return result;
-            // const result = await createIdea();
+            router.push(`/startup/${result._id}`)
+
+            return result;
 
         } catch (error) {
             if (error instanceof z.ZodError) {
