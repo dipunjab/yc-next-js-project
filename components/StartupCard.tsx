@@ -42,6 +42,15 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
+        <div className="flex items-center gap-1">
+          <Image
+            src={author?.image || ""}
+            alt={author?.name || "Author Image"}
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
+          </div>
 
       </div>
 

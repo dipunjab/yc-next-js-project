@@ -2,7 +2,8 @@ import React from 'react'
 import Link from "next/link";
 import Image from "next/image";
 import { auth, signIn, signOut } from '@/auth';
-import { LogOut } from 'lucide-react';
+import { BadgePlus, LogOut } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const Navbar = async () => {
   const session = await auth();
@@ -19,6 +20,7 @@ const Navbar = async () => {
             <>
               <Link href="/startup/create">
                 <span className="max-sm:hidden">Create</span>
+                <BadgePlus className="size-6 sm:hidden text-primary" />
               </Link>
 
               <form
@@ -28,14 +30,23 @@ const Navbar = async () => {
                   await signOut({ redirectTo: "/" });
                 }}
               >
-                <button type="submit">
+                <button type="submit" className='cursor-pointer flex items-center gap-1'>
                   <span className="max-sm:hidden">Logout</span>
                   <LogOut className="size-6 sm:hidden text-red-500" />
                 </button>
               </form>
 
               <Link href={`/user/${session?.id}`}>
-                  <h3>{session?.user?.name || ""}</h3>
+                  <Avatar className="size-8">
+                    <AvatarImage
+                      src={session?.user?.image || ""}
+                      alt={session?.user?.name || "User Image"}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                    <AvatarFallback>AV</AvatarFallback>
+                  </Avatar>
               </Link>
             </>
         ): (
